@@ -22,8 +22,6 @@ import astropy.units as u
 from astropy.io import fits
 from astropy.wcs import WCS
 from astropy.nddata import Cutout2D
-from astropy.coordinates import SkyCoord
-
 
 def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale=30):
 
