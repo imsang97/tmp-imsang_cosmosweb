@@ -51,6 +51,10 @@ def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale
             List of cutouts of COSMOS-Web SCIENCE images
         errCutouts: list of :class:'~astropy.nddata.Cutout2D'
             List of cutouts of COSMOS-Web ERROR images
+        bpmCutouts: list of :class:'~astropy.nddata.Cutout2D'
+            List of cutouts of COSMOS-Web Bad-pixel Mask images
+                * Bax-pixel Mask is not provided in COSMOS-Web?
+                * So, we consider the pixels with NaN values in the SCIENCE and ERROR images as bad pixels.
         objData: pandas.DataFrame
             DataFrame containing the information of the objects
                 * RA: Right Ascension of the objects [deg]
@@ -72,11 +76,14 @@ def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale
 
     sciCutouts = []
     errCutouts = []
+    bpmCutouts = []
 
     for i in range(len(coords)):
         if (inJWST[i] == False):
             sciCutout = None
             errCutout = None
+            bpmCutout = None
+
         else:
             jwstFname = f"mosaic_nircam_{jwst_filter}_COSMOS-Web_{pixScale}mas_{mosaicStr[i]}_v0_5_i2d.fits"
             with fits.open(jwstPwd + jwstFname, mode='denywrite') as hdul:
@@ -94,9 +101,15 @@ def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale
             nPix = sciCutout.data.size
             if (nNaN == nPix):
                 warnNaN[i] = True
+            
+            ## << Make Bad-pixel Masking >> ##
+            sciBPM    = np.isnan(sciCutout.data)
+            errBPM    = np.isnan(errCutout.data)
+            bpmCutout = (sciBPM | errBPM).astype(int)
 
         sciCutouts.append(sciCutout)
         errCutouts.append(errCutout)
+        bpmCutouts.append(bpmCutout)
 
 
     objData = pd.DataFrame({'RA (deg)': coords.ra.deg, 
@@ -105,7 +118,7 @@ def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale
                             'mosaic': mosaicStr, 
                             'warnNaN': warnNaN})
 
-    return sciCutouts, errCutouts, objData
+    return sciCutouts, errCutouts, bpmCutouts, objData
 
 
 
