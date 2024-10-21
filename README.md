@@ -5,5 +5,8 @@ For now, we have two main Python functions:
 
 Please contact me if you have any questions or comments about my code!
 
-- - - - - - - - - References - - - - - - - - - 
+
+
+--------------- References ---------------
+
 Casey et al. 2023 (https://ui.adsabs.harvard.edu/abs/2023ApJ...954...31C/abstract)
