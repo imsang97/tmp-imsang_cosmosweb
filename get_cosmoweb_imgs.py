@@ -1,7 +1,8 @@
 
 """
-A Python function for downloading COSMOS-Web images from the website (https://exchg.calet.org/cosmosweb-public/).
+A Python function to download COSMOS-Web images from the website (https://exchg.calet.org/cosmosweb-public/).
 The whole image of COSMOS-Web in each filter is divided into 10 different mosaic images (A1 to A10).
+Users can either download the images directly to the desired path or make a shell script file to download the images.
 
 Created by    : Sang Hyeok Im (tkdgur0117@gmail.com)
 Last modified : 21th October 2024
