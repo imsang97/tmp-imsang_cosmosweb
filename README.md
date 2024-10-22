@@ -9,6 +9,7 @@ There is also an example jupyter notebook, to make and check the COSMOS-Web cuto
   - examples/make_COSMOSWeb_cutouts.ipynb
 
 Please contact me if you have any questions or comments about my code!
+
 (email: tkdgur0117(at)gmail.com)
 
 
