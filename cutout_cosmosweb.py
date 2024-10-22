@@ -23,7 +23,7 @@ from astropy.io import fits
 from astropy.wcs import WCS
 from astropy.nddata import Cutout2D
 
-def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale=30):
+def make_COSMOSWeb_cutouts(coords, jwst_pwd, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale=30):
 
     """
     This function makes cutouts of both SCIENCE and ERROR images COSMOS-Web survey.
@@ -64,10 +64,9 @@ def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale
                             ('none' if not in the images)
                 * warnNaN: True if the SCIENCE cutout contains only NaN values
     """
-
-    jwstPwd    = f"/md/imsang/ODIN_obs_LSS/JWST_images/COSMOS-Web/dr{dr}/NIRCam/Apr23/"
+    
     jwstFnames = f"mosaic_nircam_{jwst_filter}_COSMOS-Web_{pixScale}mas_A*_v0_5_i2d.fits"
-    jwstFlist  = sorted(glob.glob(jwstPwd + jwstFnames))
+    jwstFlist  = sorted(glob.glob(jwst_pwd + jwstFnames))
     
     mosaicStr = find_COSMOSWeb_mosaic(coords, jwstFlist)
 
@@ -86,7 +85,7 @@ def make_COSMOWeb_cutouts(coords, jwst_filter, size=3*u.arcsec, dr=0.5, pixScale
 
         else:
             jwstFname = f"mosaic_nircam_{jwst_filter}_COSMOS-Web_{pixScale}mas_{mosaicStr[i]}_v0_5_i2d.fits"
-            with fits.open(jwstPwd + jwstFname, mode='denywrite') as hdul:
+            with fits.open(jwst_pwd + jwstFname, mode='denywrite') as hdul:
                 sciData, sciHdr = hdul[1].data, hdul[1].header
                 errData, errHdr = hdul[2].data, hdul[2].header
                 wcs             = WCS(sciHdr, naxis=2, fix=False)
