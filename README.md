@@ -4,7 +4,7 @@ For now, there are two main functions:
   1) Download the mosaic images of COSMOS-Web from their website.
   2) Make cutout images of the COSMOS-Web mosaic images at given sky positions.
 
-There is also an example jupyter notebook to make, check, and save the COSMOS-Web cutout images.
+There is also an example jupyter notebook, to make and check the COSMOS-Web cutout images and save them to FITS files.
 
   - examples/make_COSMOSWeb_cutouts.ipynb
 
